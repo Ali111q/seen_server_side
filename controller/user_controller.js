@@ -1,31 +1,38 @@
-const bcrypt = require( 'bcrypt');
-const jwt = require( 'jsonwebtoken');
-const {User}  =require( '../model/model');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { User } = require('../model/model');
 
 
-export  async function login(req, res, next ) {
+module.exports.login = async(req, res, next) => {
   const user = await User.findOne({ where: { email: req.body.email } });
   if (!user) {
     return res.json({
-      msg:'email not found',
-      status: false});
-  
+      msg: 'email not found',
+      status: false
+    });
+
   }
 
   const isPasswordValid = await bcrypt.compare(req.body.password, user.password);
   if (!isPasswordValid) {
     return res.json({
-      msg:'password inviled',
-      status: false});
-  
+      msg: 'password inviled',
+      status: false
+    });
+
   }
 
   const token = jwt.sign({ id: user.id }, 'secretKey');
 
-  
+  await user.update({
+    token: token
+  })
 
   return res.json({
-    msg:'loged in',
+    msg: 'loged in',
     status: true,
-   token: token});
+    token: token
+  });
 }
+module.exports
+

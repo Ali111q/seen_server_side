@@ -22,7 +22,6 @@ module.exports.User = db.define('user', {
         allowNull: false
     }
 
-},
-    { timestamps: false });
+}, { timestamps: false });
 
-    
+
