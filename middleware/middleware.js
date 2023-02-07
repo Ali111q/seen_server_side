@@ -12,7 +12,7 @@ module.exports.versionCheck = async (req, res, next) => {
         if (Number.parseFloat(headers['X-App-Version']) >= minVersion) {
             return next();
         } else {
-            if (headers['X-Platform']) {
+            if (headers['X-Platform'] == 'ios') {
                 return res.json({
                     status: 300,
                     msg: 'you need to update',
