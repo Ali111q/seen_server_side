@@ -1,4 +1,4 @@
-const { App } = require("../model/model");
+const { App, User } = require("../model/model");
 
 module.exports.versionCheck = async (req, res, next) => {
     const headers = req.headers;
@@ -34,4 +34,41 @@ module.exports.versionCheck = async (req, res, next) => {
         })
     }
 
+};
+
+module.exports.loginCheck = async (req, res, next)=>{
+    const headers = req.headers;
+    const token = headers.Authorization.split(' ')[1];
+
+    const user = await User.findOne({
+        where:{
+            token: token
+        }
+    });
+
+    if (user) {
+        req.body.userId = user.dataValues.id;
+       return next();
+    }
+    return res.json({
+        status: 303,
+        msg:'you need to login'
+    })
+}
+
+module.exports.checkEmail = async (req, res, next)=>{
+  const user = await  User.findAll({
+        where:{
+            email: req.body.email
+        }
+    });
+
+
+    if (user.length>0) {
+        return res.send({
+            status:304,
+            msg:'there is account with this email'
+        });
+    }
+    return next();
 }

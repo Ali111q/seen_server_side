@@ -48,6 +48,10 @@ module.exports.User = db.define('user', {
     register_time: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW
+    },
+    image:{
+        type:Sequelize.STRING,
+        allowNull:true
     }
 
 }, { timestamps: false });
