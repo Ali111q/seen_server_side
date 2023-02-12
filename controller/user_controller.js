@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { User } = require('../model/model');
+const { User, Show, Tag, Ad, Episode } = require('../model/model');
 
 
 module.exports.login = async (req, res, next) => {
@@ -78,3 +78,24 @@ module.exports.updateData = async (req, res, next) => {
 }
 
 
+// home routes /////////////////// need some more work
+module.exports.getHome= async (req, res ,next)=>{
+  let homeData = {};
+  let homeTags = await Tag.findAll();
+  // need some more work
+  let homeAds = await Ad.findAll({
+    order:[
+      ['priority', 'ASC'],
+      ['time', 'ASC']
+    ]
+  });
+  // need some more work
+  let homeBanner = await Episode.findAll({
+    limit:5,
+    order:[
+      ['priority', 'ASC'],
+    ],
+  })
+
+
+}

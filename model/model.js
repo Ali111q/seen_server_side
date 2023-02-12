@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 const db = require("../database/dtatabase");
 
 // app details 
-module.exports.App = db.define('app', {
+const App = db.define('app', {
     name: {
         type: Sequelize.STRING,
         allowNull: false
@@ -28,7 +28,7 @@ module.exports.App = db.define('app', {
 })
 
 // user table 
-module.exports.User = db.define('user', {
+const User = db.define('user', {
     username: {
         type: Sequelize.STRING,
         allowNull: false
@@ -49,15 +49,15 @@ module.exports.User = db.define('user', {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW
     },
-    image:{
-        type:Sequelize.STRING,
-        allowNull:true
+    image: {
+        type: Sequelize.STRING,
+        allowNull: true
     }
 
 }, { timestamps: false });
 
 
-module.exports.Show = db.define('show', {
+const Show = db.define('show', {
     name: {
         type: Sequelize.STRING,
         allowNull: false
@@ -126,6 +126,10 @@ const Episode = db.define('episode', {
         type: Sequelize.STRING,
         allowNull: false
     },
+    priority:{
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
     publish_time: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW
@@ -140,6 +144,10 @@ const Ad = db.define('ad', {
     description: {
         type: Sequelize.STRING,
         allowNull: false
+    },
+    image: {
+        type: Sequelize.STRING,
+        allowNull: true
     },
     video_url: {
         type: Sequelize.STRING,
@@ -168,13 +176,58 @@ const Ad = db.define('ad', {
     priority: {
         type: Sequelize.INTEGER,
         defaultValue: false
+    },
+    time: {
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW
     }
 
 }, {
     timestamps: false
 });
 
+const Place = db.define('place', {
+    name: {
+        type: Sequelize.STRING,
+        allowNull: false
+    }
+}, { timestamps: false })
 
+const AdPlace = db.define('ad_place', {
+    placeId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+            model: Place,
+            key: 'id'
+        }
+    },
+    adId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+            model: Ad,
+            key: 'id'
+        }
+    }
+})
+
+
+Tag.hasMany(Show);
+Show.belongsTo(Tag, { as: 'show', foreignKey: 'showId' });
+Show.hasMany(Season);
+Season.belongsTo(Show, { as: 'season', foreignKey: 'seasonId' });
+Season.hasMany(Episode);
+Episode.belongsTo(Season, { as: 'episode', foreignKey: 'episodeId' });
+Ad.belongsToMany(Place, { through: AdPlace, foreignKey: 'adId' });
+Place.belongsToMany(Ad, { through: AdPlace, foreignKey: 'placeId' });
+
+
+
+
+module.exports = {
+    User, Show, App, Tag, Season, Episode, Ad
+}
 
 
 
