@@ -1,5 +1,5 @@
 const express = require('express');
-const { login, updateData, register } = require('../controller/user_controller');
+const { login, updateData, register, getHome } = require('../controller/user_controller');
 const { versionCheck, loginCheck } = require('../middleware/middleware');
 
 

@@ -13,7 +13,7 @@ module.exports.login = async (req, res, next) => {
 
   }
 
-  const isPasswordValid = await bcrypt.compare(req.body.password, user.password);
+  const isPasswordValid = await bcrypt.compare(req.body.password, user.dataValues.password);
   if (!isPasswordValid) {
     return res.json({
       msg: 'password inviled',

@@ -22,10 +22,37 @@ const App = db.define('app', {
     app_store_url: {
         type: Sequelize.STRING,
         allowNull: false
+    },
+    creator:{
+        type: Sequelize.STRING,
+        allowNull: true
     }
 }, {
     timestamps: false
-})
+});
+
+
+// admin details
+
+const Admin = db.define('admin', {
+    name:{
+        type:Sequelize.STRING,
+        allowNull: false
+    },
+    email:{
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
+    password:{
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    token:{
+        type: Sequelize.STRING,
+        allowNull: true
+    }
+});
+
 
 // user table 
 const User = db.define('user', {
@@ -54,7 +81,7 @@ const User = db.define('user', {
         allowNull: true
     }
 
-}, { timestamps: false });
+},);
 
 
 const Show = db.define('show', {
@@ -210,23 +237,67 @@ const AdPlace = db.define('ad_place', {
             key: 'id'
         }
     }
-})
+});
+
+const Permission = db.define('permission',{
+    name:{
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false
+    }
+});
+
+const PermissionAdmin = db.define('permission_admin', {
+    permissionId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+            model: Place,
+            key: 'id'
+        }
+    },
+    adminId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+            model: Ad,
+            key: 'id'
+        }
+    }
+});
+
 
 
 Tag.hasMany(Show);
-Show.belongsTo(Tag, { as: 'show', foreignKey: 'showId' });
+Show.belongsTo(Tag, {as:'tag', foreignKey:'id'});
 Show.hasMany(Season);
-Season.belongsTo(Show, { as: 'season', foreignKey: 'seasonId' });
+Season.belongsTo(Show);
 Season.hasMany(Episode);
-Episode.belongsTo(Season, { as: 'episode', foreignKey: 'episodeId' });
-Ad.belongsToMany(Place, { through: AdPlace, foreignKey: 'adId' });
-Place.belongsToMany(Ad, { through: AdPlace, foreignKey: 'placeId' });
+Episode.belongsTo(Season, {as:'season', foreignKey:'id'});
+Ad.belongsToMany(Place, { through: AdPlace, foreignKey: 'placeId' });
+Place.belongsToMany(Ad, { through: AdPlace, foreignKey: 'adId' });
+Admin.belongsToMany(Permission,{through: PermissionAdmin})
+Permission.belongsToMany(Admin,{through: PermissionAdmin})
 
 
+
+
+User.sync();
+Show.sync();
+App.sync();
+Tag.sync();
+Season.sync();
+Episode.sync();
+Ad.sync();
+Place.sync();
+AdPlace.sync();
+Admin.sync();
+Permission.sync();
+PermissionAdmin.sync();
 
 
 module.exports = {
-    User, Show, App, Tag, Season, Episode, Ad
+    User, Show, App, Tag, Season, Episode, Ad, Admin, Permission
 }
 
 
