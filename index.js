@@ -18,7 +18,7 @@ app.use(session({
     cookie: { secure: false }
   }));
 
-app.use('/dasboard', router)
+app.use('/dashboard', router)
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
