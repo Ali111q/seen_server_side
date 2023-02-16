@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { Sequelize } = require('sequelize');
 
-const { Admin, User } = require("../model/model");
+const { Admin, User, Show, Episode } = require("../model/model");
 
 
 // login controller
@@ -55,10 +55,14 @@ module.exports.dashboardView = async (req, res,) => {
           }
         }
       })
-
-      defrance = thisMonthCount
+const shows = await Show.count();
+const totalView = await Episode.sum('views')
+console.log(totalView);
+      
     res.render('dashboard/index', {
         userCount: userCount,
-        defrance: defrance
+        defrance: thisMonthCount,
+        showCount: shows,
+        totalView:totalView
     });
 }

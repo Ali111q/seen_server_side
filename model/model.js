@@ -157,6 +157,10 @@ const Episode = db.define('episode', {
         type: Sequelize.INTEGER,
         allowNull: false
     },
+    views:{
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+    },
     publish_time: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW
