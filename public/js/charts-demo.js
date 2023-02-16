@@ -27,13 +27,13 @@ var lineChartConfig = {
 			backgroundColor: "rgba(117,193,129,0.2)", 
 			borderColor: "rgba(117,193,129, 0.8)", 
 			data: [
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint()
+				3000,
+				3000,
+				3000,
+				3000,
+				3000,
+				3000,
+				3000
 			],
 		}]
 	},
@@ -118,13 +118,13 @@ var barChartConfig = {
 			
 			
 			data: [
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint()
+				3000,
+				3000,
+				3000,
+				3000,
+				3000,
+				3000,
+				3000
 			]
 		}, 
 		{
@@ -134,13 +134,13 @@ var barChartConfig = {
 			
 			
 			data: [
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint()
+				3000,
+				3000,
+				3000,
+				3000,
+				3000,
+				3000,
+				3000
 			]
 		}
 		]
@@ -210,9 +210,9 @@ var pieChartConfig = {
 	data: {
 		datasets: [{
 			data: [
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint(),
+				3000,
+				3000,
+				3000,
 			],
 			backgroundColor: [
 				window.chartColors.green,
@@ -279,9 +279,9 @@ var doughnutChartConfig = {
 	data: {
 		datasets: [{
 			data: [
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint(),
+				3000,
+				3000,
+				3000,
 			],
 			backgroundColor: [
 				window.chartColors.green,
